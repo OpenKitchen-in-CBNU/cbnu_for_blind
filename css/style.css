@@ -1,0 +1,86 @@
+@import "reset.css";
+@import "variables.css";
+*{
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--main-brown);
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template:
+  "logo header" 1fr
+  "first main" 1fr
+  "second main" 1fr
+  "third main" 1fr
+  "fourth main" 1fr
+  "introduce footer" 1fr / 1fr 2fr
+  ;
+  gap: 0.25vh;
+}
+
+div{
+  background-color: var(--main-white);
+  color: var(--main-brown);
+}
+div h1{
+  font-size: 3.5vh;
+  font-weight: 600;
+}
+
+.first{
+  grid-area: logo;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.second{
+  grid-area: first;
+}
+.third{
+  grid-area: second;
+}
+.fourth{
+  grid-area: third;
+}
+.fifth{
+  grid-area: fourth;
+}
+.sixth{
+  grid-area: introduce;
+}
+.seventh{
+  grid-area: header;
+}
+.eighth{
+  grid-area: main;
+}
+.ninth{
+  grid-area: footer;
+}
+
+.logo{
+  width: 40vh;
+  height: 12.8vh;
+}
+.hover-transition{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  transition: background-color 0.15s linear, color 0.15s linear;
+}
+.hover-transition:hover{
+  color: var(--main-white);
+  background-color: var(--main-brown);
+  box-shadow: inset 0 0 1vh rgba(0, 0, 0, 1);
+}
+.hover-transition:focus{
+  color: var(--main-white);
+  background-color: var(--main-brown);
+  box-shadow: inset 0 0 1vh rgba(0, 0, 0, 1);
+}
+.hover-transition:active{
+  color: var(--main-white);
+  background-color: var(--main-brown);
+}
