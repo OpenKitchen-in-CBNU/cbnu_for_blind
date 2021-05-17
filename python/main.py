@@ -1,5 +1,5 @@
 import re    #정규 표현식 모듈
-import datetime as dt    #현재 시간 정보 가져오기 위해 호출
+import datetime as dt    #현재 시간 정보 가져오기 위해 호출 / download complete
 import speech_recognition as sr #sst 모듈
 import pyttsx3 #tts 모듈
 import requests 
@@ -11,7 +11,7 @@ engine = pyttsx3.init() #tts모듈 실행
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
-#현재기온 최저기온 최고기온 미세먼지 초미세먼지
+#현재기온 최저기온 최고기온 미세먼지 초미세먼지 스크롤링
 temp_url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%B2%AD%EC%A3%BC+%EB%82%A0%EC%94%A8&oquery=%EB%82%A0%EC%94%A8&tqi=h49mQlp0Jy0ssSNKjLGssssss2C-422644"
 temp_res = requests.get(temp_url)    
 temp_res.raise_for_status()
@@ -227,9 +227,9 @@ with sr.Microphone() as source:
     engine.say(("시간표, 날씨, 식단, 건물위치중 필요한 정보를 말씀하세요. "))
     engine.runAndWait()
     print("Speak Anything :")
-    audio = r.listen(source)
+    audio = r.listen(source)#오디오 변수에 저장
     try:
-        text = r.recognize_google(audio, language="ko-KR")
+        text = r.recognize_google(audio, language="ko-KR")#한국어로 언어 받는다
         print("You said : {} \n\n".format(text))
         
         if '날씨' in text:
