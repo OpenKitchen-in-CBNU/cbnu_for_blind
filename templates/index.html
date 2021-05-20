@@ -10,17 +10,17 @@
         <meta name="og:title" content="충북대학교 음성 정보 안내"/>
         <meta name="og:image" content="https://www.chungbuk.ac.kr/resource/site/www/images/common/logo.png" />
         <title>충북대학교 음성 정보 안내</title>
-        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="../static/css/style.css"/>
         <link 
         rel="shortcut icon" 
         sizes="16x16 32x32 64x64"
-        href="images/충북대학교 로고.jpg"
+        href="../static/images/충북대학교 로고.jpg"
         />
     </head>
     <body>
         <div class="first">
             <a tabindex="1" href="index.html">
-                <img class="logo" src="images/충북대학교 로고.PNG" alt="충북대학교 타이틀입니다. 클릭하면 초기 화면으로 이동합니다."/>
+                <img class="logo" src="../static/images/충북대학교 로고.PNG" alt="충북대학교 타이틀입니다. 클릭하면 초기 화면으로 이동합니다."/>
             </a>
         </div>
         <a tabindex="-1" href="navigation.html">
@@ -49,7 +49,17 @@
             </div>
         </a>
         <div class="seventh"></div>
-        <div class="eighth"></div>
+        <div class="eighth">
+            <form class="btn-form" action="/index" method="GET">
+                <div>
+                    <button class="start-btn">안내 시작</button>
+                </div>
+                <div class="span-div">
+                    <span class="py-word">선택한 기능 : {{word}}</span>
+                    <a href="/{{url}}"><span class="py-word">{{word}}정보로 이동하기</span></a>
+                </div>
+            </form>
+        </div>
         <div class="ninth"></div>
     </body>
 </html>

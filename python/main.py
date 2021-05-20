@@ -2,8 +2,10 @@ import re    #정규 표현식 모듈
 import datetime as dt    #현재 시간 정보 가져오기 위해 호출 / download complete
 import speech_recognition as sr #sst 모듈
 import pyttsx3 #tts 모듈
-import requests 
+import requests
 from bs4 import BeautifulSoup
+from flask import Flask
+
 now_info = dt.datetime.now()         #현재 시간 객체
 weekday_info = now_info.weekday()    #요일 (월:0 / 화:1 / 수:2 / 목:3 / 금:4 / 토:5 / 일:6)     
 

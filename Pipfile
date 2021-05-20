@@ -12,6 +12,7 @@ bs4 = "*"
 lxml = "*"
 wheel = "*"
 pipwin = "*"
+flask = "*"
 
 [dev-packages]
 
