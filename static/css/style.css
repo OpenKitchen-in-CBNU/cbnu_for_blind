@@ -94,9 +94,9 @@ div h1{
   flex-direction: column;
 }
 .start-btn{
-  width: 18vh;
-  height: 9vh;
-  font-size: 3vh;
+  width: 27vh;
+  height: 13.5vh;
+  font-size: 4.5vh;
   font-weight: 700;
   color: var(--main-brown);
   border: 0.5vh solid var(--main-brown);
@@ -108,14 +108,26 @@ div h1{
   color: var(--main-white);
 }
 .py-word{
-  font-size: 2vh;
+  font-size: 3vh;
   font-weight: 600;
-  color: var(--main-dark);
+  color: inherit;
+  padding-bottom: 3vh;
 }
-.span-div{
-  margin-top: 3vh;
-}
+
 .span-div{
   display: flex;
   flex-direction: column;
+  margin-top: 3vh;
+}
+.py-span{
+  color:var(--main-dark);
+}
+.a_div{
+  border: 0.5vh solid var(--main-brown);
+  padding: 1.5vh;
+  color: var(--main-brown);
+}
+.a_div:hover{
+  color: var(--main-white);
+  background-color: var(--main-brown);
 }
