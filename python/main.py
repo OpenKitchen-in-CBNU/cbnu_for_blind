@@ -5,6 +5,9 @@ import pyttsx3 #tts 모듈
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask
+from selenium import webdriver
+import time
+from selenium.webdriver.common.keys import Keys
 
 now_info = dt.datetime.now()         #현재 시간 객체
 weekday_info = now_info.weekday()    #요일 (월:0 / 화:1 / 수:2 / 목:3 / 금:4 / 토:5 / 일:6)     
@@ -123,9 +126,9 @@ def get_eat(): #입력받은 키워드에 '식단'이 있으면 실행되는 함
             print(no_space(diet_e[1].get_text()))
             engine.say(no_space(diet_e[1].get_text()))
             engine.runAndWait()
-        elif temp_weekday_info==3:
-            print(no_space(diet_e[3].get_text()))
-            engine.say(no_space(diet_e[3].get_text()))
+        elif temp_weekday_info==2:
+            print(no_space(diet_e[2].get_text()))
+            engine.say(no_space(diet_e[2].get_text()))
             engine.runAndWait()
         elif temp_weekday_info==3:
             print(no_space(diet_e[3].get_text()))
@@ -144,24 +147,24 @@ def get_eat(): #입력받은 키워드에 '식단'이 있으면 실행되는 함
         engine.say('별빛식당의 ' + weekday + '식단정보입니다.')
         engine.runAndWait()
         if temp_weekday_info==0:
-            print(no_space(diet_b[0].get_text()))
-            engine.say(no_space(diet_b[0].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==1:
             print(no_space(diet_b[1].get_text()))
             engine.say(no_space(diet_b[1].get_text()))
             engine.runAndWait()
-        elif temp_weekday_info==3:
+        elif temp_weekday_info==1:
+            print(no_space(diet_b[2].get_text()))
+            engine.say(no_space(diet_b[2].get_text()))
+            engine.runAndWait()
+        elif temp_weekday_info==2:
             print(no_space(diet_b[3].get_text()))
             engine.say(no_space(diet_b[3].get_text()))
             engine.runAndWait()
         elif temp_weekday_info==3:
-            print(no_space(diet_b[3].get_text()))
-            engine.say(no_space(diet_b[3].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==4:
             print(no_space(diet_b[4].get_text()))
             engine.say(no_space(diet_b[4].get_text()))
+            engine.runAndWait()
+        elif temp_weekday_info==4:
+            print(no_space(diet_b[5].get_text()))
+            engine.say(no_space(diet_b[5].get_text()))
             engine.runAndWait()
         else:
             print("오늘은 식당 영업을 하지 않습니다.")
@@ -217,10 +220,68 @@ def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되�
         
     
     
-def nevigation():  #건물 위치를 알려주는 함수
-    {
-     }
-    
+def navigation():  #건물 위치를 알려주는 함수
+   browser = webdriver.Chrome("./chromedriver.exe")
+   browser.get("https://map.kakao.com")
+
+
+   start_location = "충북대학교 학연산공동기술연구원"            #샘플
+   end_location = "충북대학교 우편취급국"
+
+   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(end_location)            #도착지 입력
+   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(Keys.ENTER)              #엔터
+   time.sleep(1)       #화면 넘어가는 동안 1초 대기
+
+   place_btn = browser.find_element_by_xpath("//*[@id='info.search.place.list']/li[1]/div[3]/strong/a[2]")           #장소 여러개중에 A장소 클릭
+   browser.execute_script("arguments[0].click();", place_btn)                                                      
+   time.sleep(0.5)      #화면 넘어가는 동안 0.5초 대기
+
+   dest_btn_elem = browser.find_element_by_class_name("destination")           #도착지로 설정 버튼    
+   browser.execute_script("arguments[0].click();", dest_btn_elem)              #도착지로 설정 버튼 클릭
+   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(start_location)         #츨발지 입력
+   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(Keys.ENTER)           #엔터
+   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+
+   walk_btn_elem = browser.find_element_by_id("walktab")               #도보 버튼 엘리먼트
+   browser.execute_script("arguments[0].click();", walk_btn_elem)      #도보 버튼 클릭
+   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+
+   path_btn_elem = browser.find_element_by_xpath("//*[@id='info.walkRoute']/div[1]/ul/li[1]/div[1]/a")         #큰길우선 버튼 엘리먼트
+   browser.execute_script("arguments[0].click();", path_btn_elem)      #큰길우선 버튼 클릭
+
+#웹 엘리먼트로부터 정보를 받아 리스트로 저장
+   route_list = []                         #경로 리스트 생성
+   numbers = []                            #경로 숫자만 뽑아서 만드는 리스트(2차원인것 생각하기.)
+   for i in range(30):
+       route_elem = browser.find_elements_by_class_name("desc")[i].text     #모든 경로 엘리먼트
+       if("도착" in route_elem):           #엘리먼트 텍스트 안에 도착 이라는 단어 나오면 탈출 
+          break
+   route_list.append(route_elem)       #경로 리스트에 추가 
+   numbers.append(re.findall("\d+", route_list[i]))            #정규식 이용하여 숫자만 뽑아 numbers 리스트에 추가
+
+#보폭 계산    
+   foot_step = 0.7                         #한 걸음당 보폭 <- 이거 입력받을 수 있으면 이거 입력 받고..
+   step_list = []                          #걸음 수 저장하는 리스트 type은 int
+   for i in range(len(numbers)):
+       step_num = float(numbers[i][0]) / foot_step
+       step_list.append(int(step_num))
+
+#최종 출력할 문자열 만들기
+   print_str = []                          #최종 출력할 문자열 리스트
+   for i in range(len(numbers)):
+       if "왼쪽" in route_list[i]:
+        print_str.append("왼쪽으로 " + str(step_list[i]) + "걸음 이동")
+       elif "오른쪽" in route_list[i]:
+        print_str.append("오른쪽으로 " + str(step_list[i]) + "걸음 이동")
+       else:
+        print_str.append(str(step_list[i]) + "걸음 직진 이동")
+
+   print(print_str)
+
+   time.sleep(1)
+   #browser.close()   #현재 탭만 종료
+   browser.quit()   #전체 브라우저 종료    
+
     
 r = sr.Recognizer()
 with sr.Microphone() as source:
@@ -239,17 +300,15 @@ with sr.Microphone() as source:
 
         elif '시간표' in text:
             get_timetable()
+        
+        elif '건물' or '위치' in text:
+            navigation()
 
         elif '식단' or '메뉴' in text:
             print("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요.")
             engine.say(("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요."))
             engine.runAndWait()
             get_eat()
-           
-        
-            
-        elif '건물' or '위치' in text:
-            pass
     
     except:
         print("Sorry could not recognize what you said\n\n")
