@@ -13,10 +13,6 @@ now_info = dt.datetime.now()         #현재 시간 객체
 weekday_info = now_info.weekday()    #요일 (월:0 / 화:1 / 수:2 / 목:3 / 금:4 / 토:5 / 일:6)     
 
 
-engine = pyttsx3.init() #tts모듈 실행
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-
 #현재기온 최저기온 최고기온 미세먼지 초미세먼지 스크롤링
 temp_url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%B2%AD%EC%A3%BC+%EB%82%A0%EC%94%A8&oquery=%EB%82%A0%EC%94%A8&tqi=h49mQlp0Jy0ssSNKjLGssssss2C-422644"
 temp_res = requests.get(temp_url)    
@@ -40,6 +36,10 @@ def no_space(text):     #공백,개행 제거 함수 정의
     return text2
 
 def get_weather(): #입력받은 키워드에 '날씨'가 있으면 청주 개신동의 날씨를 출력한다.
+    engine = pyttsx3.init() #tts모듈 실행
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
+    
     print("기상청과 웨더아이에서 제공하는 오늘의 개신동 날씨입니다.")
     engine.say("기상청과 웨더아이에서 제공하는 오늘의 개신동 날씨입니다.")
     engine.runAndWait()
@@ -80,6 +80,9 @@ def scp_res():
     
 def get_eat(): #입력받은 키워드에 '식단'이 있으면 실행되는 함수.
     #식당이름 받아옴 ex)은하수 식당 -> 요일별 출력
+     engine = pyttsx3.init() #tts모듈 실행
+     voices = engine.getProperty('voices')
+     engine.setProperty('voice', voices[0].id)
 
      diet_b, diet_e = scp_res()
 
@@ -179,6 +182,10 @@ def get_eat(): #입력받은 키워드에 '식단'이 있으면 실행되는 함
 
     
 def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되는 함수 , 요일별 시간표를 말해주는 함수다
+     engine = pyttsx3.init() #tts모듈 실행
+     voices = engine.getProperty('voices')
+     engine.setProperty('voice', voices[0].id)
+
      if int(weekday_info) == 0:
          subjects = "오늘은 09시 선형대수학 13시 자료구조 16시 컴퓨터구조 수업이 있습니다"
          print(subjects)
@@ -218,6 +225,9 @@ def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되�
     
     
 def navigation():  #건물 위치를 알려주는 함수
+   engine = pyttsx3.init() #tts모듈 실행
+   voices = engine.getProperty('voices')
+   engine.setProperty('voice', voices[0].id)
    browser = webdriver.Chrome("./chromedriver.exe")
    browser.get("https://map.kakao.com")
 
@@ -280,6 +290,9 @@ def navigation():  #건물 위치를 알려주는 함수
    browser.quit()   #전체 브라우저 종료    
 
 def voice_input():
+    engine = pyttsx3.init() #tts모듈 실행
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
     r = sr.Recognizer()
     with sr.Microphone() as source:
         #입력 받을 내용 = 시간표, 건물 위치, 식단표, 날씨
@@ -322,6 +335,13 @@ def html_index():
     url = ""
     if word is "날씨":
         url = "weather.html"
+    elif word is "시간표":
+        url = "schedule.html"
+    elif word is "식단":
+        url = "menu.html"
+    elif word is "건물":
+        url = "navigation.html"
+    
 
     return render_template("index.html", word = word, url = url)
 
@@ -334,7 +354,8 @@ def python_menu():
     print("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요.")
     engine.say(("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요."))
     engine.runAndWait()
-    return get_eat()
+    get_eat()
+    return render_template("menu.html")
 
 
 @app.route("/navigation.html")
@@ -342,7 +363,8 @@ def html_navigation():
     return render_template("navigation.html")
 @app.route("/navigation.html/run/")
 def python_navigation():
-    return navigation()
+    navigation()
+    return render_template("navigation.html")
 
 
 @app.route("/profile.html")
@@ -355,7 +377,8 @@ def html_schedule():
     return render_template("schedule.html")
 @app.route("/schedule.html/run/")
 def python_schedule():
-    return get_timetable()
+    get_timetable()
+    return render_template("schedule.html")
 
 
 @app.route("/weather.html")
@@ -363,7 +386,8 @@ def html_weather():
     return render_template("weather.html")
 @app.route("/weather.html/run/")
 def python_weather():
-    return get_weather()
+    get_weather()
+    return render_template("weather.html")
 
 
 app.run(host="0.0.0.0")
