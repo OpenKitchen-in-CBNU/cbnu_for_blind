@@ -13,6 +13,7 @@ lxml = "*"
 wheel = "*"
 pipwin = "*"
 flask = "*"
+selenium = "*"
 
 [dev-packages]
 

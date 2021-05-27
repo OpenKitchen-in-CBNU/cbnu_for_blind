@@ -20,37 +20,49 @@
     </head>
     <body>
         <div class="first">
-            <a tabindex="1" href="index.html">
+            <a tabindex="1" href="/">
                 <img class="logo" src="../static/images/충북대학교 로고.PNG" alt="충북대학교 타이틀입니다. 클릭하면 초기 화면으로 이동합니다."/>
             </a>
         </div>
-        <a tabindex="-1" href="navigation.html">
-            <div tabindex="1" class="hover-transition second">
+        <div tabindex="-1" class="hover-transition second">
+            <a tabindex="1" href="navigation.html" class="a-focus-visible">
                 <h1>학교 내 건물 위치 안내</h1>
-            </div>
-        </a>
-        <a tabindex="-1" href="schedule.html">
-            <div tabindex="2" class="hover-transition third">
-                <h1>시간표 안내</h1>
-            </div>
-        </a>
-        <a tabindex="-1" href="menu.html">
-            <div tabindex="3" class="hover-transition fourth">
+            </a>
+        </div>
+        <div tabindex="-1" class="hover-transition third">
+            <a tabindex="2" href="schedule.html" class="a-focus-visible">
+                <h1>시간표 안내</h1> 
+            </a>
+        </div>
+        <div tabindex="-1" class="hover-transition fourth">
+            <a tabindex="3" href="menu.html" class="a-focus-visible">
                 <h1>학생 식당 이용 안내</h1>
-            </div>
-        </a>
-        <a tabindex="-1" href="weather.html">
-            <div tabindex="4" class="hover-transition fifth">
+            </a>
+        </div>
+        <div tabindex="-1" class="hover-transition fifth">
+            <a tabindex="4" href="weather.html" class="a-focus-visible">
                 <h1>날씨 안내</h1>
-            </div>
-        </a>
-        <a tabindex="-1" href="profile.html">
-            <div tabindex="5" class="hover-transition sixth">
+            </a>
+        </div>
+        <div tabindex="-1" class="hover-transition sixth">
+            <a tabindex="5" href="profile.html" class="a-focus-visible">
                 <h1>제작팀 소개</h1>
-            </div>
-        </a>
+            </a>
+        </div>
         <div class="seventh"></div>
-        <div class="eighth"></div>
+        <div class="eighth a_margin">
+            <div class="restart_btn">
+                <a class="a_outline" tabindex="6" href="weather.html/run/">
+                    <span>날씨 안내</span>
+                    <span>실행</span>
+                </a>
+            </div>
+            <div class="restart_btn">
+                <a class="a_outline" tabindex="7" href="/">
+                    <span>처음으로 되돌아가기</span>
+                </a>
+            </div>
+        </div>
         <div class="ninth"></div>
     </body>
 </html>
