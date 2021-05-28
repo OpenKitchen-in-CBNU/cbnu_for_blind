@@ -86,99 +86,102 @@ def get_eat(): #입력받은 키워드에 '식단'이 있으면 실행되는 함
 
      diet_b, diet_e = scp_res()
 
-     engine.say("메뉴를 검색할 식당과 검색할 이번주의 요일을 말씀해주세요. 검색 날짜의 기본값은 오늘입니다.")
-     engine.runAndWait()
-     print("Speak Anything :")
-     audio = r.listen(source)
-     res = r.recognize_google(audio, language="ko-KR")
-     engine.say(res + "이라고 말씀하셨습니다.")
-     engine.runAndWait()
-     print("You said : {} \n\n".format(res))
-     
-     temp_weekday_info = weekday_info
-     days = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-     weekday = days[weekday_info]
+     r = sr.Recognizer()
 
-     if '월요일' in res:
-         temp_weekday_info = 0
-         weekday = '월요일'
-     elif '화요일' in res:
-         temp_weekday_info = 1
-         weekday = '화요일'
-     elif '수요일' in res:
-         temp_weekday_info = 2
-         weekday = '수요일' 
-     elif '목요일' in res:
-         temp_weekday_info = 3   
-         weekday = '목요일' 
-     elif '금요일' in res:
-         temp_weekday_info = 4   
-         weekday = '금요일' 
-
-     if '은하' in res:
-        engine.say('은하수 식당의 ' + weekday + '식단정보입니다.')
+     with sr.Microphone() as source:
+        engine.say("메뉴를 검색할 식당과 검색할 이번주의 요일을 말씀해주세요. 검색 날짜의 기본값은 오늘입니다.")
         engine.runAndWait()
-        if temp_weekday_info==0:
-            print(no_space(diet_e[0].get_text()))
-            engine.say(no_space(diet_e[0].get_text()))
+        print("Speak Anything :")
+        audio = r.listen(source)
+        res = r.recognize_google(audio, language="ko-KR")
+        engine.say(res + "이라고 말씀하셨습니다.")
+        engine.runAndWait()
+        print("You said : {} \n\n".format(res))
+        
+        temp_weekday_info = weekday_info
+        days = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+        weekday = days[weekday_info]
+
+        if '월요일' in res:
+            temp_weekday_info = 0
+            weekday = '월요일'
+        elif '화요일' in res:
+            temp_weekday_info = 1
+            weekday = '화요일'
+        elif '수요일' in res:
+            temp_weekday_info = 2
+            weekday = '수요일' 
+        elif '목요일' in res:
+            temp_weekday_info = 3   
+            weekday = '목요일' 
+        elif '금요일' in res:
+            temp_weekday_info = 4   
+            weekday = '금요일' 
+
+        if '은하' in res:
+            engine.say('은하수 식당의 ' + weekday + '식단정보입니다.')
             engine.runAndWait()
-        elif temp_weekday_info==1:
-            print(no_space(diet_e[1].get_text()))
-            engine.say(no_space(diet_e[1].get_text()))
+            if temp_weekday_info==0:
+                print(no_space(diet_e[0].get_text()))
+                engine.say(no_space(diet_e[0].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==1:
+                print(no_space(diet_e[1].get_text()))
+                engine.say(no_space(diet_e[1].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==2:
+                print(no_space(diet_e[2].get_text()))
+                engine.say(no_space(diet_e[2].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==3:
+                print(no_space(diet_e[3].get_text()))
+                engine.say(no_space(diet_e[3].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==4:
+                print(no_space(diet_e[4].get_text()))
+                engine.say(no_space(diet_e[4].get_text()))
+                engine.runAndWait()
+            else:
+                print("오늘은 식당 영업을 하지 않습니다.")
+                engine.say("오늘은 식당 영업을 하지 않습니다.")
+                engine.runAndWait()
+                
+        elif '별빛' in res:
+            engine.say('별빛식당의 ' + weekday + '식단정보입니다.')
             engine.runAndWait()
-        elif temp_weekday_info==2:
-            print(no_space(diet_e[2].get_text()))
-            engine.say(no_space(diet_e[2].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==3:
-            print(no_space(diet_e[3].get_text()))
-            engine.say(no_space(diet_e[3].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==4:
-            print(no_space(diet_e[4].get_text()))
-            engine.say(no_space(diet_e[4].get_text()))
+            if temp_weekday_info==0:
+                print(no_space(diet_b[1].get_text()))
+                engine.say(no_space(diet_b[1].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==1:
+                print(no_space(diet_b[2].get_text()))
+                engine.say(no_space(diet_b[2].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==2:
+                print(no_space(diet_b[3].get_text()))
+                engine.say(no_space(diet_b[3].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==3:
+                print(no_space(diet_b[4].get_text()))
+                engine.say(no_space(diet_b[4].get_text()))
+                engine.runAndWait()
+            elif temp_weekday_info==4:
+                print(no_space(diet_b[5].get_text()))
+                engine.say(no_space(diet_b[5].get_text()))
+                engine.runAndWait()
+            else:
+                print("오늘은 식당 영업을 하지 않습니다.")
+                engine.say("오늘은 식당 영업을 하지 않습니다.")
+                engine.runAndWait()
+                
+        elif '한빛' in res:
+            print("한빛식당은 영업을 하지 않습니다.")
+            engine.say("한빛식당은 영업을 하지 않습니다.")
             engine.runAndWait()
         else:
-            print("오늘은 식당 영업을 하지 않습니다.")
-            engine.say("오늘은 식당 영업을 하지 않습니다.")
-            engine.runAndWait()
             
-     elif '별빛' in res:
-        engine.say('별빛식당의 ' + weekday + '식단정보입니다.')
-        engine.runAndWait()
-        if temp_weekday_info==0:
-            print(no_space(diet_b[1].get_text()))
-            engine.say(no_space(diet_b[1].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==1:
-            print(no_space(diet_b[2].get_text()))
-            engine.say(no_space(diet_b[2].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==2:
-            print(no_space(diet_b[3].get_text()))
-            engine.say(no_space(diet_b[3].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==3:
-            print(no_space(diet_b[4].get_text()))
-            engine.say(no_space(diet_b[4].get_text()))
-            engine.runAndWait()
-        elif temp_weekday_info==4:
-            print(no_space(diet_b[5].get_text()))
-            engine.say(no_space(diet_b[5].get_text()))
-            engine.runAndWait()
-        else:
-            print("오늘은 식당 영업을 하지 않습니다.")
-            engine.say("오늘은 식당 영업을 하지 않습니다.")
-            engine.runAndWait()
-            
-     elif '한빛' in res:
-         print("한빛식당은 영업을 하지 않습니다.")
-         engine.say("한빛식당은 영업을 하지 않습니다.")
-         engine.runAndWait()
-     else:
-         
-         print("식당 이름을 잘못 말씀하셨습니다. 다시 말씀해주세요")
-         get_eat()
+            print("식당 이름을 잘못 말씀하셨습니다. 다시 말씀해주세요")
+            get_eat()
 
     
 def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되는 함수 , 요일별 시간표를 말해주는 함수다
@@ -225,75 +228,97 @@ def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되�
     
     
 def navigation():  #건물 위치를 알려주는 함수
-   engine = pyttsx3.init() #tts모듈 실행
-   voices = engine.getProperty('voices')
-   engine.setProperty('voice', voices[0].id)
-   browser = webdriver.Chrome("./chromedriver.exe")
-   browser.get("https://map.kakao.com")
+    engine = pyttsx3.init() #tts모듈 실행
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
+   
+    browser = webdriver.Chrome("./chromedriver.exe")
+    browser.get("https://map.kakao.com")
 
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("현재 위치를 학교명을 제외한 건물 이름으로만 말씀해주세요.")
+        engine.say("현재 위치를 학교명을 제외한 건물 이름으로만 말씀해주세요.")
+        engine.runAndWait()
+        audio = r.listen(source)#오디오 변수에 저장
+        start_voice = r.recognize_google(audio, language="ko-KR")#한국어로 언어 받는다
+        print("You said : {} \n\n".format(start_voice))
+        print("목적지를 말씀해주세요.")
+        engine.say("목적지를 말씀해주세요.")
+        engine.runAndWait()
+        audio = r.listen(source)#오디오 변수에 저장
+        end_voice = r.recognize_google(audio, language="ko-KR")#한국어로 언어 받는다
+        print("You said : {} \n\n".format(end_voice))
 
-   start_location = "충북대학교 학연산공동기술연구원"            #샘플
-   end_location = "충북대학교 우편취급국"
+        start_location = "충북대학교 " + start_voice            #샘플
+        end_location = "충북대학교 " + end_voice 
 
-   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(end_location)            #도착지 입력
-   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(Keys.ENTER)              #엔터
-   time.sleep(1)       #화면 넘어가는 동안 1초 대기
+        browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(end_location)            #도착지 입력
+        browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(Keys.ENTER)              #엔터
+        time.sleep(1)       #화면 넘어가는 동안 1초 대기
 
-   place_btn = browser.find_element_by_xpath("//*[@id='info.search.place.list']/li[1]/div[3]/strong/a[2]")           #장소 여러개중에 A장소 클릭
-   browser.execute_script("arguments[0].click();", place_btn)                                                      
-   time.sleep(0.5)      #화면 넘어가는 동안 0.5초 대기
+        place_btn = browser.find_element_by_xpath("//*[@id='info.search.place.list']/li[1]/div[3]/strong/a[2]")           #장소 여러개중에 A장소 클릭
+        browser.execute_script("arguments[0].click();", place_btn)                                                      
+        time.sleep(0.5)      #화면 넘어가는 동안 0.5초 대기
 
-   dest_btn_elem = browser.find_element_by_class_name("destination")           #도착지로 설정 버튼    
-   browser.execute_script("arguments[0].click();", dest_btn_elem)              #도착지로 설정 버튼 클릭
-   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(start_location)         #츨발지 입력
-   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(Keys.ENTER)           #엔터
-   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+        dest_btn_elem = browser.find_element_by_class_name("destination")           #도착지로 설정 버튼    
+        browser.execute_script("arguments[0].click();", dest_btn_elem)              #도착지로 설정 버튼 클릭
+        browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(start_location)         #츨발지 입력
+        browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(Keys.ENTER)           #엔터
+        time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
 
-   walk_btn_elem = browser.find_element_by_id("walktab")               #도보 버튼 엘리먼트
-   browser.execute_script("arguments[0].click();", walk_btn_elem)      #도보 버튼 클릭
-   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+        walk_btn_elem = browser.find_element_by_id("walktab")               #도보 버튼 엘리먼트
+        browser.execute_script("arguments[0].click();", walk_btn_elem)      #도보 버튼 클릭
+        time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
 
-   path_btn_elem = browser.find_element_by_xpath("//*[@id='info.walkRoute']/div[1]/ul/li[1]/div[1]/a")         #큰길우선 버튼 엘리먼트
-   browser.execute_script("arguments[0].click();", path_btn_elem)      #큰길우선 버튼 클릭
+        path_btn_elem = browser.find_element_by_xpath("//*[@id='info.walkRoute']/div[1]/ul/li[1]/div[1]/a")         #큰길우선 버튼 엘리먼트
+        browser.execute_script("arguments[0].click();", path_btn_elem)      #큰길우선 버튼 클릭
 
-#웹 엘리먼트로부터 정보를 받아 리스트로 저장
-   route_list = []                         #경로 리스트 생성
-   numbers = []                            #경로 숫자만 뽑아서 만드는 리스트(2차원인것 생각하기.)
-   for i in range(30):
-       route_elem = browser.find_elements_by_class_name("desc")[i].text     #모든 경로 엘리먼트
-       if("도착" in route_elem):           #엘리먼트 텍스트 안에 도착 이라는 단어 나오면 탈출 
-          break
-   route_list.append(route_elem)       #경로 리스트에 추가 
-   numbers.append(re.findall("\d+", route_list[i]))            #정규식 이용하여 숫자만 뽑아 numbers 리스트에 추가
+        #웹 엘리먼트로부터 정보를 받아 리스트로 저장
+        route_list = []                         #경로 리스트 생성
+        numbers = []                            #경로 숫자만 뽑아서 만드는 리스트(2차원인것 생각하기.)
+        for i in range(30):
+            route_elem = browser.find_elements_by_class_name("desc")[i].text     #모든 경로 엘리먼트
+            if("도착" in route_elem):           #엘리먼트 텍스트 안에 도착 이라는 단어 나오면 탈출 
+                break
+            route_list.append(route_elem)       #경로 리스트에 추가 
+            numbers.append(re.findall("\d+", route_list[i]))            #정규식 이용하여 숫자만 뽑아 numbers 리스트에 추가
 
-#보폭 계산    
-   foot_step = 0.7                         #한 걸음당 보폭 <- 이거 입력받을 수 있으면 이거 입력 받고..
-   step_list = []                          #걸음 수 저장하는 리스트 type은 int
-   for i in range(len(numbers)):
-       step_num = float(numbers[i][0]) / foot_step
-       step_list.append(int(step_num))
+        #보폭 계산    
+        foot_step = 0.7                         #한 걸음당 보폭 <- 이거 입력받을 수 있으면 이거 입력 받고..
+        step_list = []                          #걸음 수 저장하는 리스트 type은 int
+        for i in range(len(numbers)):
+            step_num = float(numbers[i][0]) / foot_step
+            step_list.append(int(step_num))
 
-#최종 출력할 문자열 만들기
-   print_str = []                          #최종 출력할 문자열 리스트
-   for i in range(len(numbers)):
-       if "왼쪽" in route_list[i]:
-        print_str.append("왼쪽으로 " + str(step_list[i]) + "걸음 이동")
-       elif "오른쪽" in route_list[i]:
-        print_str.append("오른쪽으로 " + str(step_list[i]) + "걸음 이동")
-       else:
-        print_str.append(str(step_list[i]) + "걸음 직진 이동")
+        print(start_location + " 부터, " + end_location + " 까지의 경로를 알려드립니다.")
+        engine.say(start_location + " 부터, " + end_location + " 까지의 경로를 알려드립니다.")
+        engine.runAndWait()
 
-   print(print_str)
+        #최종 출력할 문자열 만들기
+        print_str = []                          #최종 출력할 문자열 리스트
+        for i in range(len(numbers)):
+            if "왼쪽" in route_list[i]:
+                print_str.append("왼쪽으로 " + str(step_list[i]) + "걸음 이동")
+            elif "오른쪽" in route_list[i]:
+                print_str.append("오른쪽으로 " + str(step_list[i]) + "걸음 이동")
+            else:
+                print_str.append(str(step_list[i]) + "걸음 직진 이동")
 
-   time.sleep(1)
-   #browser.close()   #현재 탭만 종료
-   browser.quit()   #전체 브라우저 종료    
+        print(print_str)
+        engine.say(print_str)
+        engine.runAndWait()
+
+        time.sleep(1)
+        #browser.close()   #현재 탭만 종료
+        browser.quit()   #전체 브라우저 종료
 
 def voice_input():
     engine = pyttsx3.init() #tts모듈 실행
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[0].id)
     r = sr.Recognizer()
+
     with sr.Microphone() as source:
         #입력 받을 내용 = 시간표, 건물 위치, 식단표, 날씨
         print("시간표, 날씨, 식단, 건물위치중 필요한 정보를 말씀하세요. ")
@@ -333,13 +358,13 @@ def html_home():
 def html_index():
     word = voice_input()
     url = ""
-    if word is "날씨":
+    if word == "날씨":
         url = "weather.html"
-    elif word is "시간표":
+    elif word == "시간표":
         url = "schedule.html"
-    elif word is "식단":
+    elif word == "식단":
         url = "menu.html"
-    elif word is "건물":
+    elif word == "건물":
         url = "navigation.html"
     
 
@@ -349,8 +374,12 @@ def html_index():
 @app.route("/menu.html")
 def html_menu():
     return render_template("menu.html")
-@app.route("/menu.html/run/")
+@app.route("/menu.html/run")
 def python_menu():
+    engine = pyttsx3.init() #tts모듈 실행
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
+
     print("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요.")
     engine.say(("식단 정보를 불러오고 있습니다. 잠시만 기다려주세요."))
     engine.runAndWait()
@@ -361,7 +390,7 @@ def python_menu():
 @app.route("/navigation.html")
 def html_navigation():
     return render_template("navigation.html")
-@app.route("/navigation.html/run/")
+@app.route("/navigation.html/run")
 def python_navigation():
     navigation()
     return render_template("navigation.html")
@@ -375,7 +404,7 @@ def html_profile():
 @app.route("/schedule.html")
 def html_schedule():
     return render_template("schedule.html")
-@app.route("/schedule.html/run/")
+@app.route("/schedule.html/run")
 def python_schedule():
     get_timetable()
     return render_template("schedule.html")
@@ -384,7 +413,7 @@ def python_schedule():
 @app.route("/weather.html")
 def html_weather():
     return render_template("weather.html")
-@app.route("/weather.html/run/")
+@app.route("/weather.html/run")
 def python_weather():
     get_weather()
     return render_template("weather.html")

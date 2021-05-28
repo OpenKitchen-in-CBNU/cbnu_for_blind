@@ -220,67 +220,89 @@ def get_timetable(): #입력받은 내용에 시간표 가 있으면 호출되�
         
     
     
-def navigation():  #건물 위치를 알려주는 함수
-   browser = webdriver.Chrome("./chromedriver.exe")
-   browser.get("https://map.kakao.com")
+r = sr.Recognizer()
+with sr.Microphone() as source:        
+    
+ def navigation():
+    browser = webdriver.Chrome("./chromedriver.exe")
+    browser.get("https://map.kakao.com")
 
+    print("현재 위치를 학교명을 제외한 건물 이름으로만 말씀해주세요.")
+    engine.say("현재 위치를 학교명을 제외한 건물 이름으로만 말씀해주세요.")
+    engine.runAndWait()
+    audio = r.listen(source)#오디오 변수에 저장
+    start_voice = r.recognize_google(audio, language="ko-KR")#한국어로 언어 받는다
+    print("You said : {} \n\n".format(text))
 
-   start_location = "충북대학교 학연산공동기술연구원"            #샘플
-   end_location = "충북대학교 우편취급국"
+    print("목적지를 말씀해주세요.")
+    engine.say("목적지를 말씀해주세요.")
+    engine.runAndWait()
+    audio = r.listen(source)#오디오 변수에 저장
+    end_voice = r.recognize_google(audio, language="ko-KR")#한국어로 언어 받는다
+    print("You said : {} \n\n".format(text))
 
-   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(end_location)            #도착지 입력
-   browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(Keys.ENTER)              #엔터
-   time.sleep(1)       #화면 넘어가는 동안 1초 대기
+    start_location = "충북대학교 " + start_voice            #샘플
+    end_location = "충북대학교 " + end_voice 
 
-   place_btn = browser.find_element_by_xpath("//*[@id='info.search.place.list']/li[1]/div[3]/strong/a[2]")           #장소 여러개중에 A장소 클릭
-   browser.execute_script("arguments[0].click();", place_btn)                                                      
-   time.sleep(0.5)      #화면 넘어가는 동안 0.5초 대기
+    browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(end_location)            #도착지 입력
+    browser.find_element_by_xpath("//*[@id='search.keyword.query']").send_keys(Keys.ENTER)              #엔터
+    time.sleep(1)       #화면 넘어가는 동안 1초 대기
 
-   dest_btn_elem = browser.find_element_by_class_name("destination")           #도착지로 설정 버튼    
-   browser.execute_script("arguments[0].click();", dest_btn_elem)              #도착지로 설정 버튼 클릭
-   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(start_location)         #츨발지 입력
-   browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(Keys.ENTER)           #엔터
-   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+    place_btn = browser.find_element_by_xpath("//*[@id='info.search.place.list']/li[1]/div[3]/strong/a[2]")           #장소 여러개중에 A장소 클릭
+    browser.execute_script("arguments[0].click();", place_btn)                                                      
+    time.sleep(0.5)      #화면 넘어가는 동안 0.5초 대기
 
-   walk_btn_elem = browser.find_element_by_id("walktab")               #도보 버튼 엘리먼트
-   browser.execute_script("arguments[0].click();", walk_btn_elem)      #도보 버튼 클릭
-   time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
+    dest_btn_elem = browser.find_element_by_class_name("destination")           #도착지로 설정 버튼    
+    browser.execute_script("arguments[0].click();", dest_btn_elem)              #도착지로 설정 버튼 클릭
+    browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(start_location)         #츨발지 입력
+    browser.find_element_by_xpath("//*[@id='info.route.waypointSuggest.input0']").send_keys(Keys.ENTER)           #엔터
+    time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
 
-   path_btn_elem = browser.find_element_by_xpath("//*[@id='info.walkRoute']/div[1]/ul/li[1]/div[1]/a")         #큰길우선 버튼 엘리먼트
-   browser.execute_script("arguments[0].click();", path_btn_elem)      #큰길우선 버튼 클릭
+    walk_btn_elem = browser.find_element_by_id("walktab")               #도보 버튼 엘리먼트
+    browser.execute_script("arguments[0].click();", walk_btn_elem)      #도보 버튼 클릭
+    time.sleep(0.5)       #화면 넘어가는 동안 0.5초 대기
 
-#웹 엘리먼트로부터 정보를 받아 리스트로 저장
-   route_list = []                         #경로 리스트 생성
-   numbers = []                            #경로 숫자만 뽑아서 만드는 리스트(2차원인것 생각하기.)
-   for i in range(30):
-       route_elem = browser.find_elements_by_class_name("desc")[i].text     #모든 경로 엘리먼트
-       if("도착" in route_elem):           #엘리먼트 텍스트 안에 도착 이라는 단어 나오면 탈출 
-          break
-   route_list.append(route_elem)       #경로 리스트에 추가 
-   numbers.append(re.findall("\d+", route_list[i]))            #정규식 이용하여 숫자만 뽑아 numbers 리스트에 추가
+    path_btn_elem = browser.find_element_by_xpath("//*[@id='info.walkRoute']/div[1]/ul/li[1]/div[1]/a")         #큰길우선 버튼 엘리먼트
+    browser.execute_script("arguments[0].click();", path_btn_elem)      #큰길우선 버튼 클릭
 
-#보폭 계산    
-   foot_step = 0.7                         #한 걸음당 보폭 <- 이거 입력받을 수 있으면 이거 입력 받고..
-   step_list = []                          #걸음 수 저장하는 리스트 type은 int
-   for i in range(len(numbers)):
-       step_num = float(numbers[i][0]) / foot_step
-       step_list.append(int(step_num))
+    #웹 엘리먼트로부터 정보를 받아 리스트로 저장
+    route_list = []                         #경로 리스트 생성
+    numbers = []                            #경로 숫자만 뽑아서 만드는 리스트(2차원인것 생각하기.)
+    for i in range(30):
+        route_elem = browser.find_elements_by_class_name("desc")[i].text     #모든 경로 엘리먼트
+        if("도착" in route_elem):           #엘리먼트 텍스트 안에 도착 이라는 단어 나오면 탈출 
+            break
+        route_list.append(route_elem)       #경로 리스트에 추가 
+        numbers.append(re.findall("\d+", route_list[i]))            #정규식 이용하여 숫자만 뽑아 numbers 리스트에 추가
 
-#최종 출력할 문자열 만들기
-   print_str = []                          #최종 출력할 문자열 리스트
-   for i in range(len(numbers)):
-       if "왼쪽" in route_list[i]:
-        print_str.append("왼쪽으로 " + str(step_list[i]) + "걸음 이동")
-       elif "오른쪽" in route_list[i]:
-        print_str.append("오른쪽으로 " + str(step_list[i]) + "걸음 이동")
-       else:
-        print_str.append(str(step_list[i]) + "걸음 직진 이동")
+    #보폭 계산    
+    foot_step = 0.7                         #한 걸음당 보폭 <- 이거 입력받을 수 있으면 이거 입력 받고..
+    step_list = []                          #걸음 수 저장하는 리스트 type은 int
+    for i in range(len(numbers)):
+        step_num = float(numbers[i][0]) / foot_step
+        step_list.append(int(step_num))
 
-   print(print_str)
+    print(start_location + " 부터, " + end_location + " 까지의 경로를 알려드립니다.")
+    engine.say(start_location + " 부터, " + end_location + " 까지의 경로를 알려드립니다.")
+    engine.runAndWait()
 
-   time.sleep(1)
-   #browser.close()   #현재 탭만 종료
-   browser.quit()   #전체 브라우저 종료    
+    #최종 출력할 문자열 만들기
+    print_str = []                          #최종 출력할 문자열 리스트
+    for i in range(len(numbers)):
+        if "왼쪽" in route_list[i]:
+            print_str.append("왼쪽으로 " + str(step_list[i]) + "걸음 이동")
+        elif "오른쪽" in route_list[i]:
+            print_str.append("오른쪽으로 " + str(step_list[i]) + "걸음 이동")
+        else:
+            print_str.append(str(step_list[i]) + "걸음 직진 이동")
+
+    print(print_str)
+    engine.say(print_str)
+    engine.runAndWait()
+
+    time.sleep(1)
+    #browser.close()   #현재 탭만 종료
+    browser.quit()   #전체 브라우저 종료
 
     
 r = sr.Recognizer()

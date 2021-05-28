@@ -19,32 +19,32 @@
     </head>
     <body>
         <div class="first">
-            <a tabindex="1" href="/">
+            <a tabindex="3" href="/">
                 <img class="logo" src="../static/images/충북대학교 로고.PNG" alt="충북대학교 타이틀입니다. 클릭하면 초기 화면으로 이동합니다."/>
             </a>
         </div>
         <div tabindex="-1" class="hover-transition second">
-            <a tabindex="1" href="navigation.html" class="a-focus-visible">
+            <a tabindex="4" href="/navigation.html" class="a-focus-visible">
                 <h1>학교 내 건물 위치 안내</h1>
             </a>
         </div>
         <div tabindex="-1" class="hover-transition third">
-            <a tabindex="2" href="schedule.html" class="a-focus-visible">
+            <a tabindex="5" href="/schedule.html" class="a-focus-visible">
                 <h1>시간표 안내</h1> 
             </a>
         </div>
         <div tabindex="-1" class="hover-transition fourth">
-            <a tabindex="3" href="menu.html" class="a-focus-visible">
+            <a tabindex="6" href="/menu.html" class="a-focus-visible">
                 <h1>학생 식당 이용 안내</h1>
             </a>
         </div>
         <div tabindex="-1" class="hover-transition fifth">
-            <a tabindex="4" href="weather.html" class="a-focus-visible">
+            <a tabindex="7" href="/weather.html" class="a-focus-visible">
                 <h1>날씨 안내</h1>
             </a>
         </div>
         <div tabindex="-1" class="hover-transition sixth">
-            <a tabindex="5" href="profile.html" class="a-focus-visible">
+            <a tabindex="5" href="/profile.html" class="a-focus-visible">
                 <h1>제작팀 소개</h1>
             </a>
         </div>
@@ -52,12 +52,12 @@
         <div class="eighth">
             <form class="btn-form" action="/index" method="GET">
                 <div class="start-btn">
-                    <a href="index.html" tabindex="6" class="a_outline a-focus-visible">안내 시작</a>
+                    <a href="index.html" tabindex="1" class="a_outline a-focus-visible">안내 시작</a>
                 </div>
                 <div class="span-div">
                     <span class="py-word py-span">선택한 기능 : {{word}}</span>
                     <div class="a_div">
-                        <a class="a_outline" href="/{{url}}" tabindex="7"><span class="py-word">{{word}}정보로 이동하기</span></a>
+                        <a class="a_outline" href="/{{url}}" tabindex="2"><span class="py-word">{{word}} 정보로 이동하기</span></a>
                     </div>  
                 </div>
             </form>
