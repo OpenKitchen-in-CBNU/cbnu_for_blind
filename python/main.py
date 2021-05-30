@@ -354,27 +354,27 @@ def html_home():
     return render_template("index.html")
 
 
-@app.route("/index.html")
+@app.route("/index")
 def html_index():
     word = voice_input()
     url = ""
     if word == "날씨":
-        url = "weather.html"
+        url = "weather"
     elif word == "시간표":
-        url = "schedule.html"
+        url = "schedule"
     elif word == "식단":
-        url = "menu.html"
+        url = "menu"
     elif word == "건물":
-        url = "navigation.html"
+        url = "navigation"
     
 
     return render_template("index.html", word = word, url = url)
 
 
-@app.route("/menu.html")
+@app.route("/menu")
 def html_menu():
     return render_template("menu.html")
-@app.route("/menu.html/run")
+@app.route("/menu/run")
 def python_menu():
     engine = pyttsx3.init() #tts모듈 실행
     voices = engine.getProperty('voices')
@@ -387,33 +387,33 @@ def python_menu():
     return render_template("menu.html")
 
 
-@app.route("/navigation.html")
+@app.route("/navigation")
 def html_navigation():
     return render_template("navigation.html")
-@app.route("/navigation.html/run")
+@app.route("/navigation/run")
 def python_navigation():
     navigation()
     return render_template("navigation.html")
 
 
-@app.route("/profile.html")
+@app.route("/profile")
 def html_profile():
     return render_template("profile.html")
 
 
-@app.route("/schedule.html")
+@app.route("/schedule")
 def html_schedule():
     return render_template("schedule.html")
-@app.route("/schedule.html/run")
+@app.route("/schedule/run")
 def python_schedule():
     get_timetable()
     return render_template("schedule.html")
 
 
-@app.route("/weather.html")
+@app.route("/weather")
 def html_weather():
     return render_template("weather.html")
-@app.route("/weather.html/run")
+@app.route("/weather/run")
 def python_weather():
     get_weather()
     return render_template("weather.html")
