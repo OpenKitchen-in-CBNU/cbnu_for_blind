@@ -365,8 +365,7 @@ def html_index():
     elif word == "식단":
         url = "menu"
     elif word == "건물":
-        url = "navigation"
-    
+        url = "navigation"  
 
     return render_template("index.html", word = word, url = url)
 
