@@ -336,11 +336,11 @@ def voice_input():
             elif '시간표' in text:
                 return "시간표"
 
-            elif '식단' or '메뉴' in text:
+            elif ('식단' or '메뉴') in text:
                 return "식단"
             
             
-            elif '건물' or '위치' in text:
+            elif ('건물' or '위치') in text:
                 return "건물"
         
         except:
